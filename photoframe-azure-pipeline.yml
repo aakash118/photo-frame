@@ -45,3 +45,13 @@ steps:
     ArtifactName: 'drop'
     # publishLocation: 'Container'
 
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Pay-As-You-Go (b5501c42-b7da-45d9-aa33-573bfa70f5d2)'
+    appType: 'webApp'
+    WebAppName: 'photoframe'
+    deployToSlotOrASE: true
+    ResourceGroupName: 'photoframe-rg'
+    SlotName: 'production'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
