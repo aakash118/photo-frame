@@ -54,5 +54,5 @@ steps:
     deployToSlotOrASE: true
     ResourceGroupName: 'photoframe-rg'
     SlotName: 'production'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/drop.zip'
   displayName: 'Deploy photoframe'
