@@ -55,3 +55,4 @@ steps:
     ResourceGroupName: 'photoframe-rg'
     SlotName: 'production'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+  displayName: 'Deploy photoframe'
