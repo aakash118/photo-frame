@@ -88,4 +88,42 @@ stages:
                     SlotName: 'production'
                     packageForLinux: $(Pipeline.Workspace)/Files
                   displayName: 'Deploy photoframe to dev'
+  
+  - stage: Test
+    condition: succeeded()
+    dependsOn: Dev
+    displayName: Deploy to Test
+    jobs:
+      - deployment: Deploy
+        pool:
+          name: Default
+          demands:
+            - agent.Name -equals LAPTOP-FTOH5V0M
+        environment: Photoframe-test-ui
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: drop
+                  displayName: Download files ${current}
+                - task: ExtractFiles@1
+                  inputs:
+                    archiveFilePatterns: $(Pipeline.Workspace)/drop/*.zip
+                    cleanDestinationFolder: true
+                    overwriteExistingFiles: false
+                    destinationFolder: $(Pipeline.Workspace)/Files
+                  displayName: Extract fles to $(Pipeline.Workspace)/Files
+                - task: AzureRmWebAppDeployment@4
+                  inputs:
+                    ConnectionType: 'AzureRM'
+                    azureSubscription: 'Pay-As-You-Go (b5501c42-b7da-45d9-aa33-573bfa70f5d2)'
+                    appType: 'webApp'
+                    WebAppName: 'photoframe-ui-test'
+                    deployToSlotOrASE: true
+                    ResourceGroupName: 'photoframe-rg'
+                    SlotName: 'production'
+                    packageForLinux: $(Pipeline.Workspace)/Files
+                  displayName: 'Deploy photoframe to Test' 
 
+    
