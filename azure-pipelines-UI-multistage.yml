@@ -14,7 +14,7 @@ trigger:
 stages:  
   - stage: Build
     jobs:
-      - job: 
+      - job: Build
         pool:
           name: Default
           demands:
@@ -58,7 +58,7 @@ stages:
     jobs:
       - deployment: Deploy
         pool:
-          name: Defauly=t
+          name: Default
           demands:
             - agent.name -equals LAPTOP-FTOH5V0M
         environment: Photframe-dev-ui
